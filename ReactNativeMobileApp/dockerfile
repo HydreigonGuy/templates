@@ -1,0 +1,38 @@
+
+FROM reactnativecommunity/react-native-android:latest
+
+WORKDIR /app/
+
+
+# Copy the project code
+COPY ./src/ /app/
+
+# Install packages
+RUN npm install
+
+# To compile
+WORKDIR /app/android/
+RUN ./gradlew assembleRelease
+
+# Move the APK to the volume
+RUN mkdir -p /app/build/
+RUN cp /app/android/app/build/outputs/apk/release/app-release.apk /app/build/
+
+##########################################################################
+# Here are a bug of things that could come in handy that I took out
+
+# To create a new app
+# RUN npx @react-native-community/cli@latest init App
+
+# Install java
+# RUN apt update
+# RUN apt install -y default-jre
+
+# Copy the Android SDK for android compiling
+# COPY ./android-sdk /app/android-sdk
+
+# For Debug
+# CMD [ "sleep", "infinity" ]
+# CMD [ "ls" ]
+# CMD [ "npm", "start" ]
+
