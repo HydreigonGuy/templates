@@ -1,0 +1,32 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+# for the dashboard, but it's not secure so be careful
+api:
+  dashboard: true
+  insecure: true
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https
+  websecure:
+    address: :443
+
+certificatesResolvers:
+  production:
+    acme:
+      email: "adrien.thibault@epitech.eu"
+      storage: /ssl-certs/acme.json
+      caServer: "https://acme-v02.api.letsencrypt.org/directory"
+      httpChallenge:
+        entryPoint: web
+
+providers:
+  docker:
+    exposedByDefault: false

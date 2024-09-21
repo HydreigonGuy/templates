@@ -1,0 +1,19 @@
+version: '3'
+services:
+  app:
+#    container_name: website
+    build:
+      context: .
+#    image: image-name:latest
+    restart: always
+#    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      - EXAMPLE_ARG=1234
+#    volumes:
+#      - certs:/etc/letsencrypt/
+
+#volumes:
+#  certs:

@@ -1,0 +1,20 @@
+version: '3'
+services:
+  my-web:
+    image: image-name:latest
+#    build:
+#      context: .
+#    container_name: website
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.my_website.rule=Host(`my_url.com`)"
+      - "traefik.http.routers.my_website.entrypoints=websecure"
+      - "traefik.http.routers.my_website.tls=true"
+      - "traefik.http.routers.my_website.tls.certresolver=production"
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
